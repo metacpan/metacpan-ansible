@@ -1,0 +1,13 @@
+---
+
+- hosts: container_hosts
+  vars:
+    docker_edition: 'ce'
+    docker_package: "docker-{{ docker_edition }}"
+    docker_package_state: present
+    docker_install_compose: true
+    docker_compose_version: "1.24.0"
+    docker_compose_path: /usr/local/bin/docker-compose
+  roles:
+    - role: geerlingguy.docker
+      become: yes
