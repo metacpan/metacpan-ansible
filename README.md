@@ -1,3 +1,15 @@
+## Vault Utilization
+
+This project makes use of the `ansible-vault` for encrypting settings. To work
+with the vault files use the `--vault-id` parameter to pass the location of the
+vault id file.
+
+To access/edit the contents of the vault file use:
+
+```
+ansible-vault --vault-id <path/to/vault/id> edit vars/settings.yml
+```
+
 ## Galaxy Roles
 
 These roles are listed in the `requirements.yml` file and added to the
