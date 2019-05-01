@@ -29,6 +29,29 @@ directory when looking for roles.
 Adds the docker installation repository and then installs `docker` and
 `docker-compose`.
 
+### deploy_docker_mgmt.yml
+
+This role clones the `metacpan-docker-production` repository onto the servers
+that are part of the inventory group `container_hosts`.
+
+This is the lowest level of the docker deployment playbooks and is required to
+be run before deploying any other docker based sites.
+
+Variables used by this playbook can be defined in the inventory `group_vars/container_hosts.yml` file
+
+```yaml
+---
+
+docker_mgmt:
+  directory: /home/metacpan/docker-production
+  git:
+    repo: https://github.com/metacpan/metacpan-docker-production
+    version: master
+    user: metacpan
+```
+
+These values are used by the Ansible `git` task to perform the actual cloning.
+
 ## Warnings & Troubleshooting
 
 The `python` library `urllib3` may need to be updated on each system in order to
