@@ -1,0 +1,9 @@
+---
+
+docker_mgmt:
+  directory: /home/metacpan/docker-production
+  git:
+    repo: https://github.com/metacpan/metacpan-docker-production
+    version: master
+    user: metacpan
+

@@ -1,0 +1,6 @@
+# required for creating local docker containers based on inventory
+[docker-hosts]
+localhost ansible_connection=local
+
+[container_hosts]
+localhost
