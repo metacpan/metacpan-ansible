@@ -52,6 +52,40 @@ docker_mgmt:
 
 These values are used by the Ansible `git` task to perform the actual cloning.
 
+## Roles
+
+### deploy_site
+
+`deploy_site` is a base level role that is to be used for all sites within the
+`metacpan-docker` environments. The `site` variable is a required setting and
+must match the name of the service to be started, and the configuration values
+in the `var/settings.yml` file.
+
+The `deploy_site` role is comprised of 3 parts:
+
+1. configure
+2. compose_pull
+3. compose_up
+
+#### configure
+
+The configure phase integrates the values for the site in `vars/settings.yml`
+into the `{{ site }}/environment.json` file. Site settings keys are used to
+search the environment file for matching keys, and the values from settings are
+substituted. This allows for separation of development/test values and those
+used in production.
+
+#### compose_pull
+
+The compose pull phase issues the `docker-compose pull {{ site }}` command in
+order to make sure that the local images are up to date with the latest releases
+before starting the containers.
+
+#### compose_up
+
+The compose up phase starts the containers as necessary by issuing the
+`docker-compose up -d {{ site }}` command.
+
 ## Warnings & Troubleshooting
 
 The `python` library `urllib3` may need to be updated on each system in order to

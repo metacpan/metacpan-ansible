@@ -1,0 +1,14 @@
+---
+
+- name: "{{ site }} -- Integrate environment settings"
+  lineinfile:
+    path: "{{ docker_mgmt['directory'] | mandatory }}/{{ site | mandatory }}/environment.json"
+    state: present
+    regexp: >-
+      (?i)^(\s+)"({{ item.key }})"(\s*)\:(\s*)"
+    line: >-
+      \1"\2"\3:\4"{{ item.value }}"
+    backrefs: yes
+  loop: "{{ sites[ site ] | default([]) | dict2items }}"
+  become: yes
+  become_user: "{{ docker_mgmt.git.user }}"

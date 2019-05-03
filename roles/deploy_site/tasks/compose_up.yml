@@ -1,0 +1,8 @@
+---
+
+- name: "{{ site }} -- Compose Up"
+  # The -d is very important here, otherwise `docker-compose` starts in the
+  # foreground and the whole process waits.
+  shell: "/usr/local/bin/docker-compose up -d {{ site | mandatory }}"
+  args:
+    chdir: "{{ docker_mgmt['directory'] | mandatory }}"
