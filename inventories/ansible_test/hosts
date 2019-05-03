@@ -4,3 +4,6 @@ localhost ansible_connection=local
 
 [container_hosts]
 localhost
+
+[github-meets-cpan]
+localhost

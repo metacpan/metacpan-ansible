@@ -1,0 +1,8 @@
+# vim: set filetype=ansible.yaml:
+---
+
+- hosts: github-meets-cpan
+  vars:
+    site: github-meets-cpan
+  roles:
+    - deploy_site
