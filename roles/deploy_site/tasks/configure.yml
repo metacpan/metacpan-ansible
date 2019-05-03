@@ -11,4 +11,4 @@
     backrefs: yes
   loop: "{{ settings[ site ] | default([]) | dict2items }}"
   become: yes
-  become_user: "{{ docker_mgmt.git.user }}"
+  become_user: "{{ metacpan_user | default(docker_mgmt.git.user) }}"
