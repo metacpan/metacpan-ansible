@@ -1,6 +1,6 @@
 # vim: set filetype=ansible.yaml:
 ---
 
-sites:
+settings:
   github-meets-cpan:
     github_token: this needs to be set

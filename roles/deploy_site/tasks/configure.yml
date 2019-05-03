@@ -9,6 +9,6 @@
     line: >-
       \1"\2"\3:\4"{{ item.value }}"
     backrefs: yes
-  loop: "{{ sites[ site ] | default([]) | dict2items }}"
+  loop: "{{ settings[ site ] | default([]) | dict2items }}"
   become: yes
   become_user: "{{ docker_mgmt.git.user }}"
