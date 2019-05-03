@@ -56,3 +56,5 @@ script:
     | grep -q 'changed=2.*failed=0'
     && (echo 'Idempotence test: pass' && exit 0)
     || (echo 'Idempotence test: fail' && exit 1)
+
+  - cd /home/metacpan/docker-production && /usr/local/bin/docker-compose ps
