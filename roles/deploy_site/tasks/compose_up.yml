@@ -1,8 +1,17 @@
 ---
 
+- name: "{{ site }} -- Set environment variables"
+  set_fact:
+    _compose_environment: >-
+      env {{ environments[ site ] | default('') | regex_replace("\n", ' ') }}
+  when: environments is defined and environments[ site ] is defined
+
 - name: "{{ site }} -- Compose Up"
   # The -d is very important here, otherwise `docker-compose` starts in the
   # foreground and the whole process waits.
-  shell: "/usr/local/bin/docker-compose up -d {{ site | mandatory }}"
+  shell: >-
+    {{ _compose_environment | default('') }}
+    /usr/local/bin/docker-compose up
+    -d {{ site | mandatory }}
   args:
     chdir: "{{ docker_mgmt['directory'] | mandatory }}"

@@ -7,3 +7,6 @@ docker_mgmt:
     version: master
     user: metacpan
 
+environments:
+  github-meets-cpan: |
+    GH_CPAN_SITE_PORT=5002
