@@ -3,3 +3,14 @@
 - hosts: container_hosts
   roles:
     - deploy_docker_mgmt
+  tasks:
+    - name: load logging variables
+      include_vars:
+        file: ../vars/logging.yml
+        name: logging
+    - name: Set logging environment
+      include_role:
+        name: env_files
+      vars:
+        container: logging
+        env: "{{ logging.environment }}"
