@@ -86,6 +86,21 @@ before starting the containers.
 The compose up phase starts the containers as necessary by issuing the
 `docker-compose up -d {{ site }}` command.
 
+### env_files
+
+The `env_files` role writes settings specified in the `env` variable to the environment file
+named for the value in the `container` variable. If none is specified the `.env` file is
+updated instead.
+
+```yaml
+    - name: Set logging environment
+      include_role:
+        name: env_files
+      vars:
+        container: logging
+        env: "{{ logging.environment }}"
+```
+
 ## Warnings & Troubleshooting
 
 The `python` library `urllib3` may need to be updated on each system in order to

@@ -1,0 +1,17 @@
+# vim: set filetype=ansible.yaml:
+---
+
+- debug: var=env
+
+- name: "{{ container | default('.env') }} -- Integrate environment settings"
+  lineinfile:
+    path: "{{ docker_mgmt['directory'] | mandatory }}/{{ container }}.env"
+    state: present
+    regexp: >-
+      (?i)^(\s*)({{ item.key }})(\s*)\=(\s*)
+    line: >-
+      \2="{{ item.value }}"
+    backrefs: yes
+  loop: "{{ env | default([]) | dict2items }}"
+  become: yes
+  become_user: "{{ metacpan_user | default(docker_mgmt.git.user) }}"
