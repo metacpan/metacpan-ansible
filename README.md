@@ -1,16 +1,13 @@
-## Vault Utilization
+## Up and Running with Ansible
 
-This project makes use of the `ansible-vault` for encrypting settings. To work
-with the vault files use the `--vault-id` parameter to pass the location of the
-vault id file.
+This is meant to be a quick guide to getting going with Ansible with this
+project.
 
-To access/edit the contents of the vault file use:
+Before executing playbooks, this project makes use of roles from
+[galaxy.ansible.com](https://galaxy.ansible.com) which need to be installed
+prior to use.
 
-```
-ansible-vault --vault-id <path/to/vault/id> edit vars/settings.yml
-```
-
-## Galaxy Roles
+### Galaxy Roles
 
 These roles are listed in the `requirements.yml` file and added to the
 workstation by issuing:
@@ -22,7 +19,76 @@ ansible-galaxy install --roles-path ./galaxy -r requirements.yml
 The `ansible.cfg` file includes the directive to include the `./galaxy`
 directory when looking for roles.
 
-## Playbooks
+### Vault Utilization
+
+This project makes use of the `ansible-vault` for encrypting settings. To work
+with the vault files use the `--vault-id` parameter to pass the location of the
+vault id file.
+
+To access/edit the contents of the vault file use:
+
+```
+ansible-vault --vault-id <path/to/vault/id> edit vars/settings.yml
+```
+
+### Playbooks
+
+The heart of using Ansible for systems management is the use of playbooks to
+execute commands on the various systems. Details on the playbooks themselves is
+listed below.
+
+Executing playbooks is done via the `ansible-playbook` command. When executing
+the playbook runs as your user, with your privileges. If changing users is
+required (`sudo` access), then your password can be prompted for with
+`--ask-become-pass`.
+
+An example command for deploying docker to all systems:
+
+```
+ansible-playbook --ask-become-pass \
+  -i inventories/production \
+  --limit lw-mc-01.metacpan.org \
+  playbooks/provision_docker.yml
+```
+
+This playbook execution shows some of the common options when executing Ansible
+playbooks:
+
+- `-i`
+
+  The Ansible inventory to run the playbook against, in this case `production`
+
+- `--limit`
+
+  Within the inventory only run the playbook against this host or group, in this
+  case `lw-mc-01.metacpan.org`
+
+- `--ask-become-pass`
+
+  The user executing the playbooks password on the remote systems to be used by
+  the `sudo` command
+
+Additional verbosity can be added to the output produced by `ansible-playbook`
+by adding the `-v` option. The number of `v`s added corresponds to the amount of
+verbosity.
+
+Usage of the Ansible vault was dicussed previously and is available as part of
+the `ansible-playbook` command, however the example command does not make use of
+any values stored in the vault.
+
+## Playbook Details
+
+The playbooks are divided into two groups by prefix, `provision*` and `deploy*`.
+
+Provision playbooks are meant to be executed when setting up new servers or
+environments. The general idea is they contain plays that are run once, or very
+rarely. However that doesn't mean that they should not be idempotent. All
+playbooks must be idempotent.
+
+The deploy playbooks are meant to be executed all the time and can be run
+multiple times throughout the day. They're individual pieces of the environment,
+meant to be executed quickly, with one big deploy playbook to manage all the
+plays should need be.
 
 ### provision_docker.yml
 
