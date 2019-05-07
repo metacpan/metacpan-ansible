@@ -1,0 +1,8 @@
+# vim: set filetype=ansible.yaml:
+---
+
+environment:
+  ## The API KEY
+  HONEYCOMB_WRITE_KEY: YYY
+  ## HONEYCOMB_DATASET: 'dev' or 'production'
+  HONEYCOMB_DATASET: ZZZ

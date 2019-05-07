@@ -1,0 +1,9 @@
+# vim: set filetype=ansible.yaml:
+---
+
+settings:
+  github-meets-cpan:
+    github_token: this needs to be set
+environments:
+  github-meets-cpan: |
+    GH_CPAN_SITE_PORT=5002

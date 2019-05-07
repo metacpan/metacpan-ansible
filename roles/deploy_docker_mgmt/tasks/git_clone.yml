@@ -8,4 +8,4 @@
     force: yes
     version: "{{ docker_mgmt.git.version }}"
   become: yes
-  become_user: "{{ docker_mgmt.git.user }}"
+  become_user: "{{ metacpan_user | default(docker_mgmt.git.user) }}"

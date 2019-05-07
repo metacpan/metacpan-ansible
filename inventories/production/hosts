@@ -11,3 +11,6 @@ bm-mc-04.metacpan.org
 [container_hosts]
 lw-mc-01.metacpan.org
 lw-mc-02.metacpan.org
+
+[github-meets-cpan]
+lw-mc-02.metacpan.org

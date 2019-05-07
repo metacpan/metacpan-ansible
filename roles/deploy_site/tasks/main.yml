@@ -1,0 +1,10 @@
+---
+
+# create environment file
+- include_tasks: configure.yml
+
+# pull it
+- include_tasks: compose_pull.yml
+
+# up it
+- include_tasks: compose_up.yml
