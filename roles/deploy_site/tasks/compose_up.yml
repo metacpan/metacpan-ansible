@@ -15,3 +15,5 @@
     -d {{ site | mandatory }}
   args:
     chdir: "{{ docker_mgmt['directory'] | mandatory }}"
+  become: yes
+  become_user: "{{ metacpan_user | default(docker_mgmt.git.user) }}"

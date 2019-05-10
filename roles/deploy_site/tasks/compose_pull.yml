@@ -4,3 +4,5 @@
   shell: "/usr/local/bin/docker-compose pull {{ site }}"
   args:
     chdir: "{{ docker_mgmt['directory'] }}"
+  become: yes
+  become_user: "{{ metacpan_user | default(docker_mgmt.git.user) }}"
