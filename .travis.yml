@@ -60,5 +60,6 @@ script:
     | grep -q 'changed=2.*failed=0'
     && (echo 'Idempotence test: pass' && exit 0)
     || (echo 'Idempotence test: fail' && exit 1)
+  - grep github-meets-cpan-cron /etc/cron.d/github-meets-cpan
 
   - cd /home/metacpan/docker-production && /usr/local/bin/docker-compose ps

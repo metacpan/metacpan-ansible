@@ -6,3 +6,14 @@
     site: github-meets-cpan
   roles:
     - deploy_site
+
+- hosts: github-meets-cpan
+  tasks:
+    - name: Create cron entries for github-meets-cpan
+      cron:
+        name: update data
+        cron_file: github-meets-cpan
+        user: "{{ metacpan_user | default(docker_mgmt.git.user) }}"
+        special_time: hourly
+        job: "cd {{ docker_mgmt['directory'] }} && /usr/local/bin/docker-compose start github-meets-cpan-cron"
+      become: yes
