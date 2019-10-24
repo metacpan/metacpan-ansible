@@ -33,8 +33,10 @@
     groups:
       - sudo
     password: "{{ lookup('password', '/dev/null chars=ascii_letters,digits') }}"
+    comment: "{{ item.fullname | default(omit) }}"
+    shell: "{{ item.shell | default('/bin/bash') }}"
+    state: "{{ item.state | default('present') }}"
     append: true
-    state: present
   with_items: "{{ users|default([]) }}"
   when: ansible_os_family == "Debian"
 
@@ -45,7 +47,9 @@
     groups:
       - wheel
     password: "{{ lookup('password', '/dev/null chars=ascii_letters,digits') }}"
-    state: present
+    comment: "{{ item.fullname | default(omit) }}"
+    shell: "{{ item.shell | default('/bin/bash') }}"
+    state: "{{ item.state | default('present') }}"
     append: true
   with_items: "{{ users|default([]) }}"
   when: ansible_os_family == "RedHat"
@@ -58,6 +62,7 @@
     owner: "{{ item.name }}"
     state: directory
   with_items: "{{ users|default([]) }}"
+  when: item.state is not defined or item.state == "present"
 
 - name: users | ensure ssh keys are present
   become: true
