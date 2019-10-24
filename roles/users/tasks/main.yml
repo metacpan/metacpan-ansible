@@ -1,0 +1,86 @@
+---
+
+- name: sudoers | ensure sudo is installed
+  yum:
+    pkg=sudo
+    state=present
+  when: ansible_os_family == "RedHat"
+
+- name: sudoers | ensure passwordless access
+  become: true
+  lineinfile: >
+      dest=/etc/sudoers
+      state=present
+      regexp='^%sudo\s+'
+      line='%sudo ALL=(ALL:ALL) NOPASSWD:ALL'
+      validate='visudo -cf %s'
+  when: ansible_os_family == "Debian"
+
+- name: sudoers | ensure passwordless access
+  become: true
+  lineinfile: >
+      dest=/etc/sudoers
+      state=present
+      regexp='^%wheel\s+'
+      line='%wheel ALL=(ALL:ALL) NOPASSWD:ALL'
+      validate='visudo -cf %s'
+  when: ansible_os_family == "RedHat"
+
+- name: users | ensure users are in the sudoers group
+  become: true
+  user:
+    name: "{{ item.name }}"
+    groups:
+      - sudo
+    password: "{{ lookup('password', '/dev/null chars=ascii_letters,digits') }}"
+    comment: "{{ item.fullname | default(omit) }}"
+    shell: "{{ item.shell | default('/bin/bash') }}"
+    state: "{{ item.state | default('present') }}"
+    append: true
+  with_items: "{{ users|default([]) }}"
+  when: ansible_os_family == "Debian"
+
+- name: users | ensure users are in the wheel group
+  become: true
+  user:
+    name: "{{ item.name }}"
+    groups:
+      - wheel
+    password: "{{ lookup('password', '/dev/null chars=ascii_letters,digits') }}"
+    comment: "{{ item.fullname | default(omit) }}"
+    shell: "{{ item.shell | default('/bin/bash') }}"
+    state: "{{ item.state | default('present') }}"
+    append: true
+  with_items: "{{ users|default([]) }}"
+  when: ansible_os_family == "RedHat"
+
+- name: users | ensure they have .ssh directories
+  become: true
+  file:
+    dest: "/home/{{ item.name }}/.ssh"
+    mode: 0700
+    owner: "{{ item.name }}"
+    state: directory
+  with_items: "{{ users|default([]) }}"
+  when: item.state is not defined or item.state == "present"
+
+- name: users | ensure ssh keys are present
+  become: true
+  get_url:
+    url: "{{ item.ssh_keys_url }}"
+    dest: "/home/{{ item.name }}/.ssh/authorized_keys"
+    owner: "{{ item.name }}"
+    mode: 0600
+  with_items: "{{ users|default([]) }}"
+  when: item.ssh_keys_url is defined
+
+- name: users | ensure ssh keys are present
+  become: true
+  lineinfile:
+    path: "/home/{{ item.name }}/.ssh/authorized_keys"
+    owner: "{{ item.name }}"
+    mode: 0600
+    create: true
+    line: "{{ item.ssh_key }}"
+  with_items: "{{ users|default([]) }}"
+  when: item.ssh_key is defined

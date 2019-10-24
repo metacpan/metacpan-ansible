@@ -1,0 +1,18 @@
+---
+
+users:
+  - name: test1
+    fullname: "Test User 1"
+    ssh_key: >
+      ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDBIXXt0luctRWRjeqVz3QumS2rTuQOWb/8pK
+      PF/YYL7kgd3e3WSzXwA6Fabs2h9AeUaVcRG2HIim11A7vuBDGjGaWGy5S0w3sgqEJT2cAFepDQ
+      jzRhAcd6blhI42bfy+O0ok4SMLO36OnClhqv32tq2eGs35tWCQZUqaXHvhPwVQluAY4/3urWhg
+      i3JXAqbZ7dWcHCaSEw28N06oS4ykgVACHn7i9pV+5Ficr2fO6maPXkZ2cZ5xHWQT+gzfwO1bOE
+      +X1tuQ7pUe2m1ql4YC7+RmfHYxcHhAuNe+IERV6WQl024dAX6mvWic8Q2o1BDHV8Jj04kikPx6
+      VpvNOZ7vcX test1@not_real_user
+  - name: test2
+    ssh_keys_url: https://github.com/ssoriche.keys
+  - name: test3
+    fullname: "Test User 3"
+    state: absent
+    shell: /bin/zsh
