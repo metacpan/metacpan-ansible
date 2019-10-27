@@ -79,6 +79,7 @@
     mode: 0600
   with_items: "{{ users|default([]) }}"
   when: item.ssh_keys_url is defined
+    and (item.state is not defined or item.state == "present")
 
 - name: users | ensure ssh keys are present
   become: true
@@ -90,3 +91,4 @@
     line: "{{ item.ssh_key }}"
   with_items: "{{ users|default([]) }}"
   when: item.ssh_key is defined
+    and (item.state is not defined or item.state == "present")
