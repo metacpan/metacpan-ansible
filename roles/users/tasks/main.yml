@@ -26,33 +26,39 @@
       validate='visudo -cf %s'
   when: ansible_os_family == "RedHat"
 
-- name: users | ensure users are in the sudoers group
+- name: users | ensure users state
+  become: true
+  user:
+    name: "{{ item.name }}"
+    password: "{{ lookup('password', '/dev/null chars=ascii_letters,digits') }}"
+    comment: "{{ item.fullname | default(omit) }}"
+    shell: "{{ item.shell | default('/bin/bash') }}"
+    state: "{{ item.state | default('present') }}"
+  with_items: "{{ users|default([]) }}"
+
+- name: users | ensure admin users are in the sudoers group
   become: true
   user:
     name: "{{ item.name }}"
     groups:
       - sudo
-    password: "{{ lookup('password', '/dev/null chars=ascii_letters,digits') }}"
-    comment: "{{ item.fullname | default(omit) }}"
-    shell: "{{ item.shell | default('/bin/bash') }}"
-    state: "{{ item.state | default('present') }}"
     append: true
   with_items: "{{ users|default([]) }}"
   when: ansible_os_family == "Debian"
+    and item.admin is defined and item.admin
+    and (item.state is not defined or item.state == "present")
 
-- name: users | ensure users are in the wheel group
+- name: users | ensure admin users are in the wheel group
   become: true
   user:
     name: "{{ item.name }}"
     groups:
       - wheel
-    password: "{{ lookup('password', '/dev/null chars=ascii_letters,digits') }}"
-    comment: "{{ item.fullname | default(omit) }}"
-    shell: "{{ item.shell | default('/bin/bash') }}"
-    state: "{{ item.state | default('present') }}"
     append: true
   with_items: "{{ users|default([]) }}"
   when: ansible_os_family == "RedHat"
+    and item.admin is defined and item.admin
+    and (item.state is not defined or item.state == "present")
 
 - name: users | ensure they have .ssh directories
   become: true
@@ -73,6 +79,7 @@
     mode: 0600
   with_items: "{{ users|default([]) }}"
   when: item.ssh_keys_url is defined
+    and (item.state is not defined or item.state == "present")
 
 - name: users | ensure ssh keys are present
   become: true
@@ -84,3 +91,4 @@
     line: "{{ item.ssh_key }}"
   with_items: "{{ users|default([]) }}"
   when: item.ssh_key is defined
+    and (item.state is not defined or item.state == "present")

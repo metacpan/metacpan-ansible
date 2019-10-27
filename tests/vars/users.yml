@@ -15,4 +15,7 @@ users:
   - name: test3
     fullname: "Test User 3"
     state: absent
+    admin: true
     shell: /bin/zsh
+  - name: test4
+    admin: true
