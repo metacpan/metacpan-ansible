@@ -38,7 +38,7 @@ script:
     sudo ansible-playbook -i inventories/ansible_test tests/users.yml | tee -a ${idempotence}
   - >
     tail ${idempotence}
-    | grep -q 'changed=2.*failed=0'
+    | grep -q 'changed=1.*failed=0'
     && (echo 'Idempotence test: pass' && exit 0)
     || (echo 'Idempotence test: fail' && exit 1)
 
