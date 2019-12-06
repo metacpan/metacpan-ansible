@@ -2,8 +2,8 @@
 
 - name: sudoers | ensure sudo is installed
   yum:
-    pkg=sudo
-    state=present
+    pkg: sudo
+    state: latest
   when: ansible_os_family == "RedHat"
 
 - name: sudoers | ensure passwordless access
@@ -25,6 +25,24 @@
       line='%wheel ALL=(ALL:ALL) NOPASSWD:ALL'
       validate='visudo -cf %s'
   when: ansible_os_family == "RedHat"
+
+- name: users | ensure certain packages installed
+  yum:
+    name:
+      - bash
+      - tmux
+      - zsh
+    state: latest
+  when: ansible_os_family == "RedHat"
+
+- name: users | ensure certain packages installed
+  apt:
+    name:
+      - bash
+      - tmux
+      - zsh
+    state: latest
+  when: ansible_os_family == "Debian"
 
 - name: users | ensure users state
   become: true
@@ -83,12 +101,11 @@
 
 - name: users | ensure ssh keys are present
   become: true
-  lineinfile:
-    path: "/home/{{ item.name }}/.ssh/authorized_keys"
-    owner: "{{ item.name }}"
-    mode: 0600
-    create: true
-    line: "{{ item.ssh_key }}"
+  authorized_key:
+    user: "{{ item.name }}"
+    exclusive: yes
+    state: present
+    key: "{{ item.ssh_key }}"
   with_items: "{{ users|default([]) }}"
   when: item.ssh_key is defined
     and (item.state is not defined or item.state == "present")
