@@ -1,6 +1,7 @@
 ---
 
 - name: sudoers | ensure sudo is installed
+  become: true
   yum:
     pkg: sudo
     state: latest
@@ -27,6 +28,7 @@
   when: ansible_os_family == "RedHat"
 
 - name: users | ensure certain packages installed
+  become: true
   yum:
     name:
       - bash
@@ -36,6 +38,7 @@
   when: ansible_os_family == "RedHat"
 
 - name: users | ensure certain packages installed
+  become: true
   apt:
     name:
       - bash
