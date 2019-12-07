@@ -1,0 +1,13 @@
+[Unit]
+Description=OSSEC {{ ossec_service.name }}
+PartOf=ossec-hids.target
+
+[Service]
+{% if 'type' in ossec_service -%}
+Type={{ ossec_service.type }}
+{% endif -%}
+EnvironmentFile=/etc/ossec-init.conf
+Environment=DIRECTORY={{ ossec_root_dir }}
+
+ExecStartPre=/usr/bin/env ${DIRECTORY}/bin/{{ ossec_service.binary }} -t
+ExecStart=/usr/bin/env ${DIRECTORY}/bin/{{ ossec_service.binary }} -f

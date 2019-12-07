@@ -1,0 +1,21 @@
+---
+- name: "ossec | install systemd service units"
+  become: true
+  template:
+    src: "systemd/service.j2"
+    dest: "/etc/systemd/system/{{ ossec_service.binary }}.service"
+    owner: root
+    mode: 0644
+  loop: "{{ ossec_services }}"
+  loop_control:
+    loop_var: "ossec_service"
+  notify: reload systemd
+
+- name: "ossec | install systemd ossec-hids target"
+  become: true
+  template:
+    src: "systemd/target.j2"
+    dest: "/etc/systemd/system/ossec-hids.target"
+    owner: root
+    mode: 0644
+  notify: reload systemd

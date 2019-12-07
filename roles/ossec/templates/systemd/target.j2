@@ -1,0 +1,9 @@
+[Unit]
+Description=OSSEC HIDS {{ ossec_profile }}
+After=network.target
+{% for service in ossec_services -%}
+Requires={{ service.binary }}.service
+{% endfor -%}
+
+[Install]
+WantedBy=multi-user.target

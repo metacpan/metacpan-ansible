@@ -1,5 +1,11 @@
 ---
+- name: "ossec | load profile variables"
+  include_vars: "{{ ossec_profile }}.yaml"
+
 # tasks file for ossec
 - name: "ossec | install relevant packages"
   include_tasks: "install_packages.yaml"
 
+# install config files
+- name: "ossec | configure"
+  include_tasks: "configure.yaml"
