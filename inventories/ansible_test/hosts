@@ -7,3 +7,6 @@ localhost
 
 [github-meets-cpan]
 localhost
+
+[grep_metacpan]
+localhost

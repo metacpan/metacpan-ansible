@@ -45,10 +45,10 @@ script:
   # Test user deployment via ansible
   - ansible-playbook -i inventories/ansible_test playbooks/deploy_packages.yml --syntax-check
   - ansible-playbook -i inventories/ansible_test tests/deploy_packages.yml --syntax-check
-  - sudo ansible-playbook -vvvv -i inventories/ansible_test tests/deploy_packages.yml
+  - sudo ansible-playbook -i inventories/ansible_test tests/deploy_packages.yml
   - idempotence=$(mktemp)
   - >
-    sudo ansible-playbook -vvvv -i inventories/ansible_test tests/deploy_packages.yml | tee -a ${idempotence}
+    sudo ansible-playbook -i inventories/ansible_test tests/deploy_packages.yml | tee -a ${idempotence}
   - >
     tail ${idempotence}
     | grep -q 'changed=0.*failed=0'
@@ -86,5 +86,20 @@ script:
     && (echo 'Idempotence test: pass' && exit 0)
     || (echo 'Idempotence test: fail' && exit 1)
   - grep github-meets-cpan-cron /etc/cron.d/github-meets-cpan
+
+  # Test site deployment with grep_metacpan
+  # The docker-compose commands always register a change, even when docker reports that
+  # no change is going to occur, thus the expected changes are taken into account during
+  # the idempotence tests
+  - ansible-playbook -i inventories/ansible_test tests/deploy_grep_metacpan.yml --syntax-check
+  - ansible-playbook -vvvv -i inventories/ansible_test tests/deploy_grep_metacpan.yml
+  - idempotence=$(mktemp)
+  - >
+    sudo ansible-playbook -i inventories/ansible_test tests/deploy_grep_metacpan.yml | tee -a ${idempotence}
+  - >
+    tail ${idempotence}
+    | grep -q 'changed=2.*failed=0'
+    && (echo 'Idempotence test: pass' && exit 0)
+    || (echo 'Idempotence test: fail' && exit 1)
 
   - cd /home/metacpan/docker-production && /usr/local/bin/docker-compose ps
