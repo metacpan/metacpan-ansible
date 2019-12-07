@@ -55,6 +55,7 @@
     comment: "{{ item.fullname | default(omit) }}"
     shell: "{{ item.shell | default('/bin/bash') }}"
     state: "{{ item.state | default('present') }}"
+    system: "{{ item.system | default(omit) }}"
   with_items: "{{ users|default([]) }}"
 
 - name: users | ensure admin users are in the sudoers group
