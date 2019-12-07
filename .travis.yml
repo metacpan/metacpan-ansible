@@ -42,6 +42,19 @@ script:
     && (echo 'Idempotence test: pass' && exit 0)
     || (echo 'Idempotence test: fail' && exit 1)
 
+  # Test user deployment via ansible
+  - ansible-playbook -i inventories/ansible_test playbooks/deploy_packages.yml --syntax-check
+  - ansible-playbook -i inventories/ansible_test tests/deploy_packages.yml --syntax-check
+  - sudo ansible-playbook -vvvv -i inventories/ansible_test tests/deploy_packages.yml
+  - idempotence=$(mktemp)
+  - >
+    sudo ansible-playbook -vvvv -i inventories/ansible_test tests/deploy_packages.yml | tee -a ${idempotence}
+  - >
+    tail ${idempotence}
+    | grep -q 'changed=0.*failed=0'
+    && (echo 'Idempotence test: pass' && exit 0)
+    || (echo 'Idempotence test: fail' && exit 1)
+
   # Test metacpan-docker-production deployment via ansible
   - ansible-playbook -i inventories/ansible_test tests/deploy_docker_mgmt.yml --syntax-check
   - ansible-playbook -i inventories/ansible_test tests/deploy_docker_mgmt.yml
