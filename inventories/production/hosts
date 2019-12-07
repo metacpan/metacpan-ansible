@@ -9,13 +9,16 @@ bm-mc-02.metacpan.org
 bm-mc-04.metacpan.org
 
 [hivelocity]
-hc-mc-01.metacpan.org ansible_host=66.165.235.226
-hc-mc-02.metacpan.org ansible_host=66.165.235.238
-hc-mc-03.metacpan.org ansible_host=66.165.235.242
+hc-mc-01.metacpan.org
+hc-mc-02.metacpan.org
+hc-mc-03.metacpan.org
 
 [container_hosts]
 lw-mc-01.metacpan.org
 lw-mc-02.metacpan.org
+hc-mc-01.metacpan.org
+hc-mc-02.metacpan.org
+hc-mc-03.metacpan.org
 
 [github-meets-cpan]
 lw-mc-02.metacpan.org
