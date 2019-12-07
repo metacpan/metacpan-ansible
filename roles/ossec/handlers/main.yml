@@ -1,0 +1,6 @@
+---
+# handlers file for ossec
+- name: "restart ossec"
+  service:
+    name: "ossec"
+    state: "restarted"

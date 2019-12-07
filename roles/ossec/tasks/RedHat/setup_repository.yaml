@@ -1,0 +1,16 @@
+---
+- name: "ossec | yum gpg key"
+  become: true
+  rpm_key:
+    key: https://www.atomicorp.com/RPM-GPG-KEY.atomicorp.txt
+    state: present
+
+- name: "ossec | yum repository"
+  become: true
+  yum_repository:
+    name: ossec-hids
+    description: "Official OSSEC-HIDS Yum Repository"
+    gpgkey: https://www.atomicorp.com/RPM-GPG-KEY.atomicorp.txt
+    gpgcheck: yes
+    mirrorlist: "https://updates.atomicorp.com/channels/mirrorlist/atomic/el{{ ansible_distribution_major_version }}-{{ ansible_architecture }}"
+    state: present

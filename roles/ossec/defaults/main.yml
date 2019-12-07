@@ -1,0 +1,4 @@
+---
+# defaults file for ossec
+ossec_profile: "agent"
+ossec_root_dir: /var/ossec
