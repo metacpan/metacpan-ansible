@@ -1,0 +1,6 @@
+---
+
+packages:
+  - tmux
+  - vim
+  - emacs
