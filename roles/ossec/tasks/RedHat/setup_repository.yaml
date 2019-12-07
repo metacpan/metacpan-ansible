@@ -12,5 +12,5 @@
     description: "Official OSSEC-HIDS Yum Repository"
     gpgkey: https://www.atomicorp.com/RPM-GPG-KEY.atomicorp.txt
     gpgcheck: yes
-    mirrorlist: "https://updates.atomicorp.com/channels/mirrorlist/atomic/el{{ ansible_distribution_major_version }}-{{ ansible_architecture }}"
+    mirrorlist: "https://updates.atomicorp.com/channels/mirrorlist/atomic/{{ ansible_distribution|lower }}-{{ ansible_distribution_major_version }}-{{ ansible_architecture }}"
     state: present
