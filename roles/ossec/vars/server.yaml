@@ -1,13 +1,15 @@
 ---
 ossec_services:
-  - name: Agentless
-    binary: ossec-agentless
+  #- name: Agentless
+    #binary: ossec-agentless
   - name: Analysis
     binary: ossec-analysisd
+  - name: Client Authentication
+    binary: ossec-authd
   - name: Syslog Client
     binary: ossec-csyslogd
-  - name: Database
-    binary: ossec-dbd
+  #- name: Database
+    #binary: ossec-dbd
   - name: Execd
     binary: ossec-execd
   - name: Log Collector

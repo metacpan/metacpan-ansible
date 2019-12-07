@@ -2,10 +2,18 @@
 - name: "ossec | load profile variables"
   include_vars: "{{ ossec_profile }}.yaml"
 
-# tasks file for ossec
 - name: "ossec | install relevant packages"
   include_tasks: "install_packages.yaml"
 
-# install config files
 - name: "ossec | configure"
-  include_tasks: "configure.yaml"
+  include_tasks: "configure_systemd.yaml"
+
+- name: "ossec | flush handlers"
+  meta: flush_handlers
+
+- name: "ossec | ensure the service is running"
+  become: true
+  service:
+    name: "ossec-hids"
+    state: started
+    enabled: true
