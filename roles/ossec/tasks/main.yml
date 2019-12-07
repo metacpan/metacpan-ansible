@@ -8,12 +8,17 @@
 - name: "ossec | configure"
   include_tasks: "configure_systemd.yaml"
 
+# TODO: rekey checks
+# TODO: build out ossec.conf
+# TODO: server key initialization
+# TODO: rules management for the server
+
 - name: "ossec | flush handlers"
   meta: flush_handlers
 
 - name: "ossec | ensure the service is running"
   become: true
   service:
-    name: "ossec-hids"
+    name: ossec
     state: started
     enabled: true
