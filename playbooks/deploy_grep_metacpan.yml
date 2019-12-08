@@ -17,6 +17,14 @@
         dest: "{{ grep_repo }}"
       become: true
       become_user: "{{ metacpan_user | default(docker_mgmt.git.user) }}"
+    - name: deploy grep site | define volume for git repository
+      docker_volume:
+        name: metacpan_git_shared
+        driver_options:
+          type: none
+          device: "{{ grep_repo }}"
+          o: bind
+      become: true
     - name: deploy grep site | deploy site
       include_role:
         name: deploy_site
