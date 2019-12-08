@@ -12,4 +12,4 @@
       - metacpan
   roles:
     - role: geerlingguy.docker
-      become: yes
+      become: true

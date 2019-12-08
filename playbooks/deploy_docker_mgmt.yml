@@ -1,6 +1,14 @@
 ---
 
 - hosts: container_hosts
+  become: true
+  vars:
+    pip_install_packages:
+      - name: docker
+  roles:
+    - geerlingguy.pip
+
+- hosts: container_hosts
   roles:
     - deploy_docker_mgmt
   tasks:

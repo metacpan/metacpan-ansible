@@ -1,6 +1,14 @@
 ---
 
 - hosts: container_hosts
+  become: true
+  vars:
+    pip_install_packages:
+      - name: docker
+  roles:
+    - geerlingguy.pip
+
+- hosts: container_hosts
   roles:
     - deploy_docker_mgmt
   tasks:
@@ -14,3 +22,11 @@
       vars:
         container: logging
         env: "{{ logging.environment }}"
+    - name: deploy docker management | define volumes
+      docker_volume:
+        name: metacpan_git_shared
+        driver_options:
+          type: none
+          device: "{{ grep_repo }}"
+          o: bind
+      become: true

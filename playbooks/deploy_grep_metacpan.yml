@@ -1,0 +1,30 @@
+# vim: set filetype=ansible.yaml:
+---
+
+- hosts: grep_metacpan
+  environment:
+    MC_CONF_PRIVATE_DIR: "{{ grep_repo }}"
+  vars:
+    site: grep
+  vars_files:
+    - ../vars/settings.yml
+  tasks:
+    - name: deploy grep site | checkout grep git repository
+      git:
+        clone: true
+        repo: "{{ github_repo }}"
+        version: master
+        dest: "{{ grep_repo }}"
+      become: true
+      become_user: "{{ metacpan_user | default(docker_mgmt.git.user) }}"
+    - name: deploy grep site | define volume for git repository
+      docker_volume:
+        name: metacpan_git_shared
+        driver_options:
+          type: none
+          device: "{{ grep_repo }}"
+          o: bind
+      become: true
+    - name: deploy grep site | deploy site
+      include_role:
+        name: deploy_site

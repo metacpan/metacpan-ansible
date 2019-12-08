@@ -1,3 +1,5 @@
+---
+
 # Install Ansible Roles
 # ---------------------
 # `ansible-galaxy install --roles-path ./galaxy -r requirements.yml` is executed
@@ -5,3 +7,4 @@
 # to include any roles you want installed prior to running main.yml.
 
 - src: geerlingguy.docker
+- src: geerlingguy.pip

@@ -1,0 +1,5 @@
+---
+
+settings:
+  grep:
+    mc_conf_private_dir: /home/metacpan/metacpan-cpan-extracted
