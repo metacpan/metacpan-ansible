@@ -1,0 +1,30 @@
+# vim: set filetype=ansible.yaml:
+---
+
+- hosts: hound_metacpan
+  environment:
+    MC_CONF_PRIVATE_DIR: "{{ grep_repo }}"
+  vars:
+    site: hound
+  vars_files:
+    - ../vars/settings.yml
+  tasks:
+    - name: deploy hound site | checkout grep git repository
+      git:
+        clone: true
+        repo: "{{ github_repo }}"
+        version: master
+        dest: "{{ grep_repo }}"
+      become: true
+      become_user: metacpan
+    - name: deploy hound site | define volume for git repository
+      docker_volume:
+        name: metacpan_git_shared
+        driver_options:
+          type: none
+          device: "{{ grep_repo }}"
+          o: bind
+      become: true
+    - name: deploy hound site | deploy site
+      include_role:
+        name: deploy_site
