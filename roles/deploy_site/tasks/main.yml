@@ -3,8 +3,10 @@
 # create environment file
 - include_tasks: configure.yml
 
-# pull it
-- include_tasks: compose_pull.yml
-
-# up it
-- include_tasks: compose_up.yml
+- name: "{{ site }} -- Setup containers with latest"
+  docker_compose:
+    project_src: "{{ docker_mgmt['directory'] }}"
+    pull: true
+    services: "{{ site }}"
+  become: true
+  become_user: root
