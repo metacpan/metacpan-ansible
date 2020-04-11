@@ -1,5 +1,5 @@
 ---
 
 metacpan_user: metacpan
-github_repo: "https://github.com/metacpan/metacpan-cpan-extracted-lite.git"
+github_repo: "https://github.com/metacpan/metacpan-cpan-extracted.git"
 grep_repo: /home/metacpan/metacpan-cpan-extracted
