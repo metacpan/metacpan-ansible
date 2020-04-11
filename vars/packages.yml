@@ -5,3 +5,4 @@ packages:
   - vim
   - emacs
   - tmux
+  - python3
