@@ -17,5 +17,3 @@ users:
     state: absent
     admin: true
     shell: /bin/zsh
-  - name: test4
-    admin: true

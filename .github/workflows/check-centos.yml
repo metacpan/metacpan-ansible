@@ -1,0 +1,21 @@
+name: Ansible check
+
+on: [push, pull_request]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: install ansible
+        run: apt-get update && apt-get install -y ansible sudo
+
+      - name: test/users.yml
+        run: |
+          ansible-galaxy install --roles-path ./galaxy -r requirements.yml
+          ansible-playbook -i inventories/ansible_test tests/users.yml --syntax-check
+          ansible-playbook -i inventories/ansible_test tests/users.yml
+          idempotence=$(mktemp)
+          ansible-playbook -i inventories/ansible_test tests/users.yml | tee -a ${idempotence}
