@@ -1,0 +1,9 @@
+---
+- hosts: metacpan_web
+  vars:
+    nodejs_version: "12.x"
+    nodejs_npm_global_packages:
+      - name: yarn
+  roles:
+    - role: geerlingguy.nodejs
+      become: true

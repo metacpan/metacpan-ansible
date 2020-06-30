@@ -10,3 +10,6 @@ localhost
 
 [grep_metacpan]
 localhost
+
+[metacpan_web]
+localhost
