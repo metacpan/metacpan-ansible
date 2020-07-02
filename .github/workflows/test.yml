@@ -1,0 +1,17 @@
+on: [push,pull_request]
+
+name: Test
+
+jobs:
+  test-job:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install python
+        run: sudo apt-get update && sudo apt-get -y install python3-pip python-dev && sudo apt-get update
+      - name: Install apt packages
+        run : sudo apt-get install software-properties-common
+      - name: Install Ansible
+        run: sudo apt-add-repository --yes --update ppa:ansible/ansible && sudo apt-get install ansible
+      - name: requirements
+        run: ansible-galaxy install --roles-path ./galaxy -r requirements.yml
