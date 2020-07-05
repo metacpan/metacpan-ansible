@@ -6,3 +6,4 @@ packages:
   - emacs
   - tmux
   - python3
+  - python
