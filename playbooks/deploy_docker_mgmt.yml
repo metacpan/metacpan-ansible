@@ -3,21 +3,15 @@
 - hosts: container_hosts
   become: true
   vars:
-    ansible_python_interpreter: /usr/bin/python
     pip_package: python3-pip
     pip_executable: /usr/bin/pip3
     pip_install_packages:
       - name: docker
       - name: docker-compose
   tasks:
-    - name: enable epel
-      include_role:
-        name: geerlingguy.repo-epel
-      when: ansible_os_family == "RedHat"
     - name: ensure pip is installed
       include_role:
         name: geerlingguy.pip
-      when: ansible_os_family == "RedHat"
 
 - hosts: container_hosts
   roles:
