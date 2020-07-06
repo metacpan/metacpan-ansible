@@ -1,12 +1,5 @@
 ---
 
-- name: sudoers | ensure sudo is installed
-  become: true
-  yum:
-    pkg: sudo
-    state: latest
-  when: ansible_os_family == "RedHat"
-
 - name: sudoers | ensure passwordless access
   become: true
   lineinfile: >
@@ -16,26 +9,6 @@
       line='%sudo ALL=(ALL:ALL) NOPASSWD:ALL'
       validate='visudo -cf %s'
   when: ansible_os_family == "Debian"
-
-- name: sudoers | ensure passwordless access
-  become: true
-  lineinfile: >
-      dest=/etc/sudoers
-      state=present
-      regexp='^%wheel\s+'
-      line='%wheel ALL=(ALL:ALL) NOPASSWD:ALL'
-      validate='visudo -cf %s'
-  when: ansible_os_family == "RedHat"
-
-- name: users | ensure certain packages installed
-  become: true
-  yum:
-    name:
-      - bash
-      - tmux
-      - zsh
-    state: latest
-  when: ansible_os_family == "RedHat"
 
 - name: users | ensure certain packages installed
   become: true
@@ -67,18 +40,6 @@
     append: true
   with_items: "{{ users|default([]) }}"
   when: ansible_os_family == "Debian"
-    and item.admin is defined and item.admin
-    and (item.state is not defined or item.state == "present")
-
-- name: users | ensure admin users are in the wheel group
-  become: true
-  user:
-    name: "{{ item.name }}"
-    groups:
-      - wheel
-    append: true
-  with_items: "{{ users|default([]) }}"
-  when: ansible_os_family == "RedHat"
     and item.admin is defined and item.admin
     and (item.state is not defined or item.state == "present")
 

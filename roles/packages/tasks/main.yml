@@ -2,13 +2,6 @@
 
 - name: packages | ensure certain packages installed
   become: true
-  yum:
-    name: "{{ packages }}"
-    state: latest
-  when: ansible_os_family == "RedHat"
-
-- name: packages | ensure certain packages installed
-  become: true
   apt:
     name: "{{ packages }}"
     state: latest
