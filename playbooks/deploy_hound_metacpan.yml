@@ -28,3 +28,11 @@
     - name: deploy hound site | deploy site
       include_role:
         name: deploy_site
+    - name: Create cron entries for shared git
+      cron:
+        name: update data
+        cron_file: metacpan_git_shared
+        user: "{{ metacpan_user | default(docker_mgmt.git.user) }}"
+        special_time: hourly
+        job: "cd {{ grep_repo }} && git pull origin master > /dev/null 2>&1"
+      become: yes
