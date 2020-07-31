@@ -1,0 +1,31 @@
+; https://github.com/CPAN-API/metacpan-conf-private/blob/master/metacpan-web/metacpan_web_local.conf
+;
+; do not use localhost:5000 for the production server since Starman seems to have
+; problems with closing connections thus causing zombie www processes.
+
+api {{ site_settings.api }}
+api_secure {{ site_settings.api_secure }}
+
+consumer_key = {{ site_settings.consumer_key }}
+consumer_secret = {{ site_settings.consumer_secret }}
+cookie_secret   = {{ site_settings.cookie_secret }}
+
+# Fastly API token with full `api-key` access (needed for /datacenter/list)
+fastly_api_key = {{ site_settings.fastly_api_key }}
+
+# metacpan.org service id
+fastly_service_id = {{ site_settings.fastly_service_id }}
+
+{% for item in site_settings.fastly_service -%}
+<fastly service>
+    id = {{ item.id }}
+    name = {{ item.name }}
+    {% if item.display_on_stats_page is defined -%}
+    display_on_stats_page = {{  item.display_on_stats_page }}
+    {% endif -%}
+</fastly>
+{% endfor %}
+
+<view HTML>
+  STAT_TTL 31536000
+</view>
