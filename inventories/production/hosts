@@ -29,3 +29,7 @@ hc-mc-01.metacpan.org ansible_python_interpreter="/usr/bin/env python3"
 [hound_metacpan]
 hc-mc-01.metacpan.org ansible_python_interpreter="/usr/bin/env python3"
 hc-mc-02.metacpan.org ansible_python_interpreter="/usr/bin/env python3"
+
+[web_metacpan]
+hc-mc-01.metacpan.org ansible_python_interpreter="/usr/bin/env python3"
+hc-mc-02.metacpan.org ansible_python_interpreter="/usr/bin/env python3"
