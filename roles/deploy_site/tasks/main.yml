@@ -3,10 +3,16 @@
 # create environment file
 - include_tasks: configure.yml
 
+- name: Dynamic Scaling
+  set_fact:
+    __scale={"{{ site }}":"{{ site_scale | default(1) }}"}
+
 - name: "{{ site }} -- Setup containers with latest"
   docker_compose:
     project_src: "{{ docker_mgmt['directory'] }}"
     pull: true
     services: "{{ site }}"
+    scale:
+      "{{ __scale }}"
   become: true
   become_user: root
