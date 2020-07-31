@@ -12,3 +12,29 @@
   loop: "{{ settings[ site ] | default({}) | dict2items }}"
   become: yes
   become_user: "{{ metacpan_user | default(docker_mgmt.git.user) }}"
+  when: site_config_type is undefined
+   or site_config_type != "template"
+
+- name: "{{ site }} -- Create templated configuration path"
+  file:
+    dest: "{{ site_config_file | dirname }}"
+    mode: "644"
+    owner: root
+    group: "{{ metacpan_user | default(docker_mgmt.git.user) }}"
+    state: directory
+  become: yes
+  when: site_config_type is defined
+   and site_config_type == "template"
+
+- name: "{{ site }} -- Templated configuration file"
+  vars:
+    site_settings: "{{ settings[ site ] }}"
+  template:
+    src: "{{ site_config_template }}"
+    dest: "{{ site_config_file }}"
+    mode: "644"
+    owner: root
+    group: "{{ metacpan_user | default(docker_mgmt.git.user) }}"
+  become: yes
+  when: site_config_type is defined
+   and site_config_type == "template"
