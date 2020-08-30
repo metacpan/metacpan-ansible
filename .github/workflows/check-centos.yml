@@ -20,10 +20,9 @@ jobs:
           apt-get install -y ansible
           ansible-galaxy install --roles-path ./galaxy -r requirements.yml
 
-      - name: test/users.yml
+      - name: playbooks/deploy_users.yml
         run: |
-          ansible-galaxy install --roles-path ./galaxy -r requirements.yml
-          ansible-playbook -i inventories/ansible_test tests/users.yml --syntax-check
+          ansible-playbook -i inventories/ansible_test playbooks/deploy_users.yml --syntax-check
           ansible-playbook -i inventories/ansible_test tests/users.yml
           idempotence=$(mktemp)
           sudo ansible-playbook -i inventories/ansible_test tests/users.yml | tee -a ${idempotence}
