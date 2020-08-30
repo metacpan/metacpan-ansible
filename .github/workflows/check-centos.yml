@@ -9,9 +9,15 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
+      - name: install prerequisites
+        run: |
+          apt update
+          apt install --yes --reinstall software-properties-common sudo
+
       - name: install ansible
         run: |
-          apt-get update && apt-get install -y ansible sudo
+          apt-add-repository --yes --update ppa:ansible/ansible
+          apt-get install -y ansible
           ansible-galaxy install --roles-path ./galaxy -r requirements.yml
 
       - name: test/users.yml
