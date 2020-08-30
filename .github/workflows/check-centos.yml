@@ -10,7 +10,9 @@ jobs:
       - uses: actions/checkout@v2
 
       - name: install ansible
-        run: apt-get update && apt-get install -y ansible sudo
+        run: |
+          apt-get update && apt-get install -y ansible sudo
+          ansible-galaxy install --roles-path ./galaxy -r requirements.yml
 
       - name: test/users.yml
         run: |
