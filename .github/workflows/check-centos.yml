@@ -26,4 +26,4 @@ jobs:
           ansible-playbook -i inventories/ansible_test tests/users.yml --syntax-check
           ansible-playbook -i inventories/ansible_test tests/users.yml
           idempotence=$(mktemp)
-          ansible-playbook -i inventories/ansible_test tests/users.yml | tee -a ${idempotence}
+          sudo ansible-playbook -i inventories/ansible_test tests/users.yml | tee -a ${idempotence}
