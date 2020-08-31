@@ -27,7 +27,7 @@ jobs:
           ansible-playbook -i inventories/ansible_test tests/users.yml
           idempotence=$(mktemp)
           sudo ansible-playbook -i inventories/ansible_test tests/users.yml | tee -a ${idempotence}
-          tail ${idempotence} | grep -q 'changed=0.*failed=0' && (echo 'Idempotence test: pass' && exit 0) || (echo 'Idempotence test: fail' && exit 1)
+          tail ${idempotence} | grep -q 'changed=1.*failed=0' && (echo 'Idempotence test: pass' && exit 0) || (echo 'Idempotence test: fail' && exit 1)
 
       - name: playbooks/deploy_packages.yml
         run: |
