@@ -21,6 +21,10 @@ jobs:
           apt-get update && apt-get install -y ansible sudo
           ansible-galaxy install --roles-path ./galaxy -r requirements.yml
 
+      - name: add application user
+        run: |
+          adduser metacpan
+
       - name: playbooks/deploy_users.yml
         run: |
           ansible-playbook -i inventories/ansible_test playbooks/deploy_users.yml --syntax-check
