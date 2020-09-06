@@ -47,4 +47,4 @@ jobs:
           ansible-playbook -vvvv -i inventories/ansible_test tests/deploy_docker_mgmt.yml
           idempotence=$(mktemp)
           sudo ansible-playbook -i inventories/ansible_test tests/deploy_docker_mgmt.yml | tee -a ${idempotence}
-          tail ${idempotence} | grep -q 'changed=0.*failed=0' && (echo 'Idempotence test: pass' && exit 0) || (echo 'Idempotence test: fail' && exit 1)
+          tail ${idempotence} | grep -q 'changed=2.*failed=0' && (echo 'Idempotence test: pass' && exit 0) || (echo 'Idempotence test: fail' && exit 1)
