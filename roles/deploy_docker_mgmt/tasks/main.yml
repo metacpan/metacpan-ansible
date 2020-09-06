@@ -1,4 +1,6 @@
 ---
 
+- include_tasks: python_docker.yml
+
 # clone it
 - include_tasks: git_clone.yml

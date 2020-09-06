@@ -1,19 +1,6 @@
 ---
 
 - hosts: container_hosts
-  become: true
-  vars:
-    pip_package: python3-pip
-    pip_executable: /usr/bin/pip3
-    pip_install_packages:
-      - name: docker
-      - name: docker-compose
-  tasks:
-    - name: ensure pip is installed
-      include_role:
-        name: geerlingguy.pip
-
-- hosts: container_hosts
   roles:
     - deploy_docker_mgmt
   tasks:

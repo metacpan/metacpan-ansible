@@ -1,0 +1,14 @@
+---
+
+
+- block:
+  - name: ensure pip is installed
+    include_role:
+      name: geerlingguy.pip
+    vars:
+      pip_package: python3-pip
+      pip_executable: /usr/bin/pip3
+      pip_install_packages:
+        - name: docker
+        - name: docker-compose
+  become: true
