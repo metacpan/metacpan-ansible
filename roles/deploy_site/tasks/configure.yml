@@ -1,5 +1,28 @@
 ---
 
+- name: "{{ site }} -- Create templated configuration directory"
+  file:
+    dest: "{{ docker_mgmt['directory'] | mandatory }}/{{ site | mandatory }}"
+    mode: "755"
+    owner: "{{ metacpan_user | default(docker_mgmt.git.user) }}"
+    group: "{{ metacpan_user | default(docker_mgmt.git.user) }}"
+    state: directory
+  become: yes
+  when: site_config_type is undefined
+   or site_config_type != "template"
+
+
+- name: "{{ site }} -- Create templated configuration file"
+  file:
+    dest: "{{ docker_mgmt['directory'] | mandatory }}/{{ site | mandatory }}/environment.json"
+    mode: "644"
+    owner: "{{ metacpan_user | default(docker_mgmt.git.user) }}"
+    group: "{{ metacpan_user | default(docker_mgmt.git.user) }}"
+    state: touch
+  become: yes
+  when: site_config_type is undefined
+   or site_config_type != "template"
+
 - name: "{{ site }} -- Integrate environment settings"
   lineinfile:
     path: "{{ docker_mgmt['directory'] | mandatory }}/{{ site | mandatory }}/environment.json"
