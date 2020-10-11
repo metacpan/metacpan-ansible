@@ -11,19 +11,18 @@ jobs:
 
       - name: install prerequisites
         run: |
-          apt update
-          apt install --yes --reinstall software-properties-common sudo
+          sudo apt update
+          sudo apt install --yes --reinstall software-properties-common sudo
 
       - name: install ansible
         run: |
-          apt update
-          apt-add-repository --yes --update ppa:ansible/ansible
-          apt-get update && apt-get install -y ansible sudo
+          sudo apt-add-repository --yes --update ppa:ansible/ansible
+          sudo apt-get install -y ansible
           ansible-galaxy install --roles-path ./galaxy -r requirements.yml
 
       - name: add application user
         run: |
-          adduser metacpan
+          sudo adduser metacpan
 
       - name: playbooks/deploy_users.yml
         run: |
