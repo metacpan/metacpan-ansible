@@ -71,3 +71,11 @@ jobs:
           idempotence=$(mktemp)
           sudo ansible-playbook -i inventories/ansible_test tests/deploy_hound_metacpan.yml | tee -a ${idempotence}
           tail ${idempotence} | grep -q 'changed=1.*failed=0' && (echo 'Idempotence test: pass' && exit 0) || (echo 'Idempotence test: fail' && exit 1)
+
+      - name: playbooks/deploy_web_metacpan.yml
+        run: |
+          ansible-playbook -i inventories/ansible_test tests/deploy_web_metacpan.yml --syntax-check
+          ansible-playbook -vvvv -i inventories/ansible_test tests/deploy_web_metacpan.yml
+          idempotence=$(mktemp)
+          sudo ansible-playbook -i inventories/ansible_test tests/deploy_web_metacpan.yml | tee -a ${idempotence}
+          tail ${idempotence} | grep -q 'changed=0.*failed=0' && (echo 'Idempotence test: pass' && exit 0) || (echo 'Idempotence test: fail' && exit 1)

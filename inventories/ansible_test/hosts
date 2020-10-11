@@ -13,3 +13,6 @@ localhost
 
 [hound_metacpan]
 localhost
+
+[web_metacpan]
+localhost

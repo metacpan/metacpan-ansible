@@ -3,3 +3,21 @@
 settings:
   grep:
     mc_conf_private_dir: /home/metacpan/metacpan-cpan-extracted
+  web:
+    log4perl_file: log4perl_prod.conf
+    api: https://api.metacpan.org
+    api_secure: https://api.metacpan.org
+    consumer_key:  metacpan.org
+    consumer_secret:  this_is_a_secret
+    cookie_secret: c_is_for_cookie_thats_good_enough_for_me
+    fastly_api_key:  this_is_a_secret
+    fastly_service_id:  this_is_a_secret
+    fastly_service:
+       - id:  this_is_a_secret
+         name:  cpan.metacpan.org
+         display_on_stats_page:  1
+       - id:  this_is_another_secret
+         name:  metacpan.org
+         display_on_stats_page:  1
+       - id:  this_also_is_a_secret
+         name:  mcpan.org
