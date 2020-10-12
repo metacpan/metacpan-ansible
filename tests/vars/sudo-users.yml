@@ -1,0 +1,5 @@
+---
+
+users:
+  - name: test4
+    admin: true

@@ -6,8 +6,8 @@
     MC_CONF_PRIVATE_DIR: "{{ grep_repo }}"
   vars:
     site: grep
-    vars_files:
-      - vars/settings.yml
+  vars_files:
+    - vars/settings.yml
   tasks:
     - name: deploy grep site | checkout grep git repository
       git:

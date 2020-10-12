@@ -1,6 +1,6 @@
 # required for creating local docker containers based on inventory
 [docker-hosts]
-localhost ansible_connection=local
+localhost ansible_connection=local ansible_python_interpreter="/usr/bin/env python3"
 
 [container_hosts]
 localhost
@@ -9,4 +9,10 @@ localhost
 localhost
 
 [grep_metacpan]
+localhost
+
+[hound_metacpan]
+localhost
+
+[web_metacpan]
 localhost

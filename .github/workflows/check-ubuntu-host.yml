@@ -1,0 +1,81 @@
+name: Ansible check
+
+on: [push, pull_request]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: install prerequisites
+        run: |
+          sudo apt update
+          sudo apt install --yes --reinstall software-properties-common sudo
+
+      - name: install ansible
+        run: |
+          sudo apt-add-repository --yes --update ppa:ansible/ansible
+          sudo apt-get install -y ansible python3 python3-setuptools
+          ansible-galaxy install --roles-path ./galaxy -r requirements.yml
+
+      - name: add application user
+        run: |
+          sudo adduser metacpan
+
+      - name: playbooks/deploy_users.yml
+        run: |
+          ansible-playbook -i inventories/ansible_test playbooks/deploy_users.yml --syntax-check
+          ansible-playbook -vvvv -i inventories/ansible_test tests/users.yml
+          idempotence=$(mktemp)
+          sudo ansible-playbook -i inventories/ansible_test tests/users.yml | tee -a ${idempotence}
+          tail ${idempotence} | grep -q 'changed=1.*failed=0' && (echo 'Idempotence test: pass' && exit 0) || (echo 'Idempotence test: fail' && exit 1)
+
+      - name: playbooks/deploy_packages.yml
+        run: |
+          ansible-playbook -i inventories/ansible_test playbooks/deploy_packages.yml --syntax-check
+          ansible-playbook -vvvv -i inventories/ansible_test tests/deploy_packages.yml
+          idempotence=$(mktemp)
+          sudo ansible-playbook -i inventories/ansible_test tests/deploy_packages.yml | tee -a ${idempotence}
+          tail ${idempotence} | grep -q 'changed=0.*failed=0' && (echo 'Idempotence test: pass' && exit 0) || (echo 'Idempotence test: fail' && exit 1)
+
+      - name: playbooks/deploy_docker_mgmt.yml
+        run: |
+          ansible-playbook -i inventories/ansible_test playbooks/deploy_docker_mgmt.yml --syntax-check
+          ansible-playbook -vvvv -i inventories/ansible_test tests/deploy_docker_mgmt.yml
+          idempotence=$(mktemp)
+          sudo ansible-playbook -i inventories/ansible_test tests/deploy_docker_mgmt.yml | tee -a ${idempotence}
+          tail ${idempotence} | grep -q 'changed=2.*failed=0' && (echo 'Idempotence test: pass' && exit 0) || (echo 'Idempotence test: fail' && exit 1)
+
+      - name: playbooks/deploy_github-meets-cpan.yml
+        run: |
+          ansible-playbook -i inventories/ansible_test tests/deploy_github-meets-cpan.yml --syntax-check
+          ansible-playbook -vvvv -i inventories/ansible_test tests/deploy_github-meets-cpan.yml
+          idempotence=$(mktemp)
+          sudo ansible-playbook -i inventories/ansible_test tests/deploy_github-meets-cpan.yml | tee -a ${idempotence}
+          tail ${idempotence} | grep -q 'changed=1.*failed=0' && (echo 'Idempotence test: pass' && exit 0) || (echo 'Idempotence test: fail' && exit 1)
+
+      - name: playbooks/deploy_grep_metacpan.yml
+        run: |
+          ansible-playbook -i inventories/ansible_test tests/deploy_grep_metacpan.yml --syntax-check
+          ansible-playbook -vvvv -i inventories/ansible_test tests/deploy_grep_metacpan.yml
+          idempotence=$(mktemp)
+          sudo ansible-playbook -i inventories/ansible_test tests/deploy_grep_metacpan.yml | tee -a ${idempotence}
+          tail ${idempotence} | grep -q 'changed=1.*failed=0' && (echo 'Idempotence test: pass' && exit 0) || (echo 'Idempotence test: fail' && exit 1)
+
+      - name: playbooks/deploy_hound_metacpan.yml
+        run: |
+          ansible-playbook -i inventories/ansible_test tests/deploy_hound_metacpan.yml --syntax-check
+          ansible-playbook -vvvv -i inventories/ansible_test tests/deploy_hound_metacpan.yml
+          idempotence=$(mktemp)
+          sudo ansible-playbook -i inventories/ansible_test tests/deploy_hound_metacpan.yml | tee -a ${idempotence}
+          tail ${idempotence} | grep -q 'changed=1.*failed=0' && (echo 'Idempotence test: pass' && exit 0) || (echo 'Idempotence test: fail' && exit 1)
+
+      - name: playbooks/deploy_web_metacpan.yml
+        run: |
+          ansible-playbook -i inventories/ansible_test tests/deploy_web_metacpan.yml --syntax-check
+          ansible-playbook -vvvv -i inventories/ansible_test tests/deploy_web_metacpan.yml
+          idempotence=$(mktemp)
+          sudo ansible-playbook -i inventories/ansible_test tests/deploy_web_metacpan.yml | tee -a ${idempotence}
+          tail ${idempotence} | grep -q 'changed=0.*failed=0' && (echo 'Idempotence test: pass' && exit 0) || (echo 'Idempotence test: fail' && exit 1)

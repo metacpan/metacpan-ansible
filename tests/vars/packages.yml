@@ -1,6 +1,7 @@
 ---
 
 packages:
+  - git
   - tmux
   - vim
   - emacs
