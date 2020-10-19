@@ -1,0 +1,4 @@
+---
+
+- name: System Updates
+  import_playbook: ../playbooks/system_updates.yml
