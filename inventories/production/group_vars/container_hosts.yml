@@ -1,5 +1,7 @@
 ---
 
+reboot: true
+
 docker_mgmt:
   directory: /home/metacpan/docker-production
   git:
