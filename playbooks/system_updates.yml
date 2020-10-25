@@ -9,6 +9,7 @@
       apt:
         update_cache: yes
         upgrade: dist
+        orce_apt_get: yes
       async: 3600
       poll: 30
     - name: Check if a reboot is needed for Debian and Ubuntu boxes
