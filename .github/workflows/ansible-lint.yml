@@ -1,0 +1,13 @@
+name: Ansible Later  # feel free to pick your own name
+on: [push, pull_request]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: run ansible-later action
+      uses: patrickjahns/ansible-later-action@master
+      with:
+        # config: .later.yml
+        path: "**/*.yml"
