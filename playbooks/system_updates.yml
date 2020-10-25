@@ -6,9 +6,7 @@
   serial: 1
   tasks:
     - name: Update apt get
-      apt:
-        update_cache: yes
-        upgrade: dist
+      shell: apt update && apt dist-upgrade -y
     - name: Check if a reboot is needed for Debian and Ubuntu boxes
       register: reboot_required_file
       stat: path=/var/run/reboot-required get_md5=no
