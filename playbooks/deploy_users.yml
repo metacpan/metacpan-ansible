@@ -2,9 +2,10 @@
 
 - hosts: all
   tasks:
-    - name: load users variables
+    - name: Load users variables
       include_vars:
         file: ../vars/users.yml
-    - name: deploy users
+
+    - name: Deploy users
       include_role:
         name: users

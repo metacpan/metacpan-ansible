@@ -4,10 +4,11 @@
   roles:
     - deploy_docker_mgmt
   tasks:
-    - name: load logging variables
+    - name: Load logging variables
       include_vars:
         file: ../vars/logging.yml
         name: logging
+
     - name: Set logging environment
       include_role:
         name: env_files
