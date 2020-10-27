@@ -1,7 +1,8 @@
 ---
 
 - hosts: container_hosts
-  become: true
+  become: True
+  become_user: root
   vars:
     pip_install_packages:
       - name: docker
@@ -12,21 +13,24 @@
   roles:
     - deploy_docker_mgmt
   tasks:
-    - name: load logging variables
+    - name: Load logging variables
       include_vars:
         file: vars/logging.yml
         name: logging
+
     - name: Set logging environment
       include_role:
         name: env_files
       vars:
         container: logging
         env: "{{ logging.environment }}"
-    - name: deploy docker management | define volumes
+
+    - name: Deploy docker management | define volumes
       docker_volume:
         name: metacpan_git_shared
         driver_options:
           type: none
           device: "{{ grep_repo }}"
           o: bind
-      become: true
+      become: True
+      become_user: root

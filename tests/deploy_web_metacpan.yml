@@ -11,12 +11,14 @@
   vars_files:
     - vars/settings.yml
   become: yes
+  become_user: root
   tasks:
-    - name: create configuration directory
+    - name: Create configuration directory
       file:
         dest: /metacpan-web
         state: directory
         mode: 0755
-    - name: deploy web site | deploy site
+
+    - name: Deploy web site | deploy site
       include_role:
         name: deploy_site
