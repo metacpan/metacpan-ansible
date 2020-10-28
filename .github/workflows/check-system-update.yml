@@ -1,0 +1,28 @@
+name: Ansible check
+
+on: [push, pull_request]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    container: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: install prerequisites
+        run: |
+          sudo apt update
+          sudo apt install --yes --reinstall software-properties-common sudo
+
+      - name: install ansible
+        run: |
+          sudo apt-add-repository --yes --update ppa:ansible/ansible
+          sudo apt-get install -y ansible python3 python3-setuptools
+          ansible-galaxy install --roles-path ./galaxy -r requirements.yml
+
+      - name: playbooks/system_updates.yml
+        run: |
+          ansible-playbook -i inventories/ansible_test tests/system_updates.yml --syntax-check
+          ansible-playbook -vvvv -i inventories/ansible_test tests/system_updates.yml
