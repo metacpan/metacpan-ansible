@@ -1,0 +1,16 @@
+---
+
+- name: Docker Management
+  import_playbook: deploy_docker_mgmt.yml
+
+- name: Deploy GitHub Meets CPAN
+  import_playbook: deploy_github-meets-cpan.yml
+
+- name: Deploy grep MetaCPAN
+  import_playbook: deploy_grep_metacpan.yml
+
+- name: Deploy Hound MetaCPAN
+  import_playbook: deploy_hound_metacpan.yml
+
+- name: Deploy Web MetaCPAN
+  import_playbook: deploy_web_metacpan.yml
