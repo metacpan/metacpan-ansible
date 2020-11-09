@@ -7,6 +7,24 @@ Before executing playbooks, this project makes use of roles from
 [galaxy.ansible.com](https://galaxy.ansible.com) which need to be installed
 prior to use.
 
+<!-- vim-markdown-toc GFM -->
+
+  * [Galaxy Roles](#galaxy-roles)
+  * [Vault Utilization](#vault-utilization)
+  * [Playbooks](#playbooks)
+* [Playbook Details](#playbook-details)
+  * [provision_docker.yml](#provision_dockeryml)
+  * [deploy_docker_mgmt.yml](#deploy_docker_mgmtyml)
+* [Roles](#roles)
+  * [deploy_site](#deploy_site)
+    * [configure](#configure)
+    * [compose_pull](#compose_pull)
+    * [compose_up](#compose_up)
+  * [env_files](#env_files)
+* [Warnings & Troubleshooting](#warnings--troubleshooting)
+
+<!-- vim-markdown-toc -->
+
 ### Galaxy Roles
 
 These roles are listed in the `requirements.yml` file and added to the
@@ -28,7 +46,7 @@ vault id file.
 To access/edit the contents of the vault file use:
 
 ```
-ansible-vault --vault-id <path/to/vault/id> edit vars/settings.yml
+ansible-vault edit --vault-password-file <path/to/vault/id> vars/users.yml
 ```
 
 ### Playbooks
