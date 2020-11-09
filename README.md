@@ -46,7 +46,7 @@ vault id file.
 To access/edit the contents of the vault file use:
 
 ```
-ansible-vault --vault-id <path/to/vault/id> edit vars/settings.yml
+ansible-vault edit --vault-password-file <path/to/vault/id> vars/users.yml
 ```
 
 ### Playbooks
