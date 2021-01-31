@@ -9,3 +9,4 @@
 - src: geerlingguy.docker
 - src: geerlingguy.repo-epel
 - src: geerlingguy.pip
+- src: geerlingguy.firewall
