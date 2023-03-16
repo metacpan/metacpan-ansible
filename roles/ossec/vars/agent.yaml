@@ -1,0 +1,10 @@
+---
+ossec_services:
+  - name: Agent
+    binary: ossec-agentd
+  - name: Execd
+    binary: ossec-execd
+  - name: Log Collector
+    binary: ossec-logcollector
+  - name: Syscheck
+    binary: ossec-syscheckd

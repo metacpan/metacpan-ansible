@@ -1,0 +1,4 @@
+---
+# vars file for ossec
+ossec_client_keys: "{{ ossec_root_dir }}/etc/client.keys"
+ossec_config: "{{ ossec_root_dir }}/etc/ossec.conf"

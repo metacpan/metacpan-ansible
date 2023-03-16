@@ -1,0 +1,11 @@
+---
+- name: "ossec | setup repositories"
+  include_tasks: "{{ ansible_os_family }}/setup_repository.yaml"
+
+- name: "ossec | install packages"
+  become: true
+  package:
+    name: "ossec-hids-{{ ossec_profile }}"
+    state: latest
+  notify: "restart ossec"
+

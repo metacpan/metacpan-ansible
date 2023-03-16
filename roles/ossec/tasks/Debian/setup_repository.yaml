@@ -1,0 +1,13 @@
+---
+- name: "ossec | apt signing key"
+  become: true
+  apt_key:
+    url: https://www.atomicorp.com/RPM-GPG-KEY.atomicorp.txt
+    state: present
+
+- name: "ossec | apt repository"
+  become: true
+  apt_repository:
+    repo: "deb https://updates.atomicorp.com/channels/atomic/{{ ansible_distribution|lower }} {{ ansible_distribution_release  }} main"
+    filename: ossec-hids
+    state: present

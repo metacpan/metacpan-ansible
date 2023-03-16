@@ -1,0 +1,25 @@
+---
+ossec_services:
+  #- name: Agentless
+    #binary: ossec-agentless
+  - name: Analysis
+    binary: ossec-analysisd
+  - name: Client Authentication
+    binary: ossec-authd
+  - name: Syslog Client
+    binary: ossec-csyslogd
+  #- name: Database
+    #binary: ossec-dbd
+  - name: Execd
+    binary: ossec-execd
+  - name: Log Collector
+    binary: ossec-logcollector
+  - name: Mailer
+    binary: ossec-maild
+  - name: Monitor
+    binary: ossec-monitord
+  - name: Remote Control
+    binary: ossec-remoted
+    type: forking
+  - name: Syscheck
+    binary: ossec-syscheckd
