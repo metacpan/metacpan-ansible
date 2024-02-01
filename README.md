@@ -1,3 +1,8 @@
+**NOTE**: This repository is for maintaining the legacy un-containerized
+clusters. Any changes here are to support the clusters while the transition
+continues. Do not add any new site deployments to this repository, instead see
+https://github.com/metacpan/metacpan-k8s
+
 ## Up and Running with Ansible
 
 This is meant to be a quick guide to getting going with Ansible with this

@@ -7,29 +7,3 @@ lw-mc-03.metacpan.org
 bm-mc-01.metacpan.org
 bm-mc-02.metacpan.org
 bm-mc-04.metacpan.org
-
-[hivelocity]
-hc-mc-01.metacpan.org ansible_python_interpreter="/usr/bin/env python3"
-hc-mc-02.metacpan.org ansible_python_interpreter="/usr/bin/env python3"
-hc-mc-03.metacpan.org ansible_python_interpreter="/usr/bin/env python3"
-
-[container_hosts]
-lw-mc-01.metacpan.org
-lw-mc-02.metacpan.org
-hc-mc-01.metacpan.org ansible_python_interpreter="/usr/bin/env python3"
-hc-mc-02.metacpan.org ansible_python_interpreter="/usr/bin/env python3"
-hc-mc-03.metacpan.org ansible_python_interpreter="/usr/bin/env python3"
-
-[github-meets-cpan]
-lw-mc-02.metacpan.org
-
-[grep_metacpan]
-hc-mc-01.metacpan.org ansible_python_interpreter="/usr/bin/env python3"
-
-[hound_metacpan]
-hc-mc-01.metacpan.org ansible_python_interpreter="/usr/bin/env python3"
-hc-mc-02.metacpan.org ansible_python_interpreter="/usr/bin/env python3"
-
-[web_metacpan]
-hc-mc-01.metacpan.org ansible_python_interpreter="/usr/bin/env python3" metacpan_web_scale=2
-hc-mc-02.metacpan.org ansible_python_interpreter="/usr/bin/env python3" metacpan_web_scale=2
